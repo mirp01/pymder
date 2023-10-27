@@ -19,8 +19,14 @@ def app():
 
 
     try:
-        display_images()
-        st.title('Posted by: '+st.session_state['username'] )
+        if st.session_state.username=='':
+            st.title("Nothing in here")
+            st.text("It is pretty Lonely in here")
+            
+        else:
+            display_images()
+        
+            st.title('Posted by: '+st.session_state['username'] )
 
             
         result = db.collection('Posts').document(st.session_state['username']).get()

@@ -9,7 +9,7 @@ def upload_image():
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
     if uploaded_file is not None:
         bucket = storage.bucket(app=firebase_app)  # Specify the pre-initialized Firebase app
-        blob = bucket.blob(f"images/{uploaded_file.name}")
+        blob = bucket.blob(f"images/{st.session_state['username']}/{uploaded_file.name}")
         blob.upload_from_file(uploaded_file)
         st.markdown("Image succesfully uploaded!")
 

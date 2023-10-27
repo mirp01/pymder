@@ -3,7 +3,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 
-import pages.home as home, pages.test as test, pages.your as your, pages.about as about, pages.setup as setup
+import home as home, test as test, your as your, about as about, setup as setup
 st.set_page_config(
         page_title="PYMDER",
 )
@@ -33,7 +33,7 @@ class MultiApp:
                     "container": {"padding": "5!important","background-color":'black'},
         "icon": {"color": "white", "font-size": "23px"}, 
         "nav-link": {"color":"white","font-size": "20px", "text-align": "left", "margin":"0px", "--hover-color": "blue"},
-        "nav-link-selected": {"background-color": "#02ab21"},}
+        }
                 
                 )
 
