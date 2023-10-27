@@ -9,7 +9,7 @@ def display_images():
     st.title("Image gallery")
     st.markdown("Here you can see the images you have uploaded")
     bucket = storage.bucket(app=firebase_app)  # Specify the pre-initialized Firebase app
-    blobs = bucket.list_blobs(prefix="images/")
+    blobs = bucket.list_blobs(prefix=f"images/{st.session_state['username']}")
     for blob in blobs:
         url = blob.generate_signed_url(datetime.timedelta(hours=1))
         st.image(url, caption=blob.name)
