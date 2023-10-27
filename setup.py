@@ -19,20 +19,21 @@ def cuidadNTags():
     option = st.selectbox(
     'Where is your bussiness located?',
     ('Pueblo paleta', 'Machupichu', 'El reino de muy muy lejano', 'Guadalajara', 'Jocotepec'),placeholder='Select one form the options')
-    if st.button('Set Cuidad',use_container_width=20):
+    if st.button('Set Ciudad',use_container_width=20):
         if option!='':
                     
-            info = db.collection('Cuidad').document(st.session_state.username).get()
+            info = db.collection('Ciudad').document(st.session_state.username).get()
             if info.exists:
                 info = info.to_dict()
                 if 'Content' in info.keys():
                 
                     pos=db.collection('Cuidad').document(st.session_state.username)
                     pos.update({u'Content': firestore.ArrayUnion([u'{}'.format(option)])})
-        st.write('Cuidad uploaded')
+        st.write('Ciudad uploaded')
 
 # Main function to run the app
 def app():
+    db = firestore.client()
     st.title('This is were you set up your business account')
     if st.session_state.username=='':
         st.header('Please log in or create an account')
@@ -40,4 +41,6 @@ def app():
         st.subheader('Start uploading to your profile')
         upload_image()
         cuidadNTags()
+    pos = db.collection('Ciudad').document(st.session_state.username)
+
     
