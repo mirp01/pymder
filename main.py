@@ -3,7 +3,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 
-import home, trending, test, your, about
+import pages.home as home, pages.trending as trending, pages.test as test, pages.your as your, pages.about as about
 st.set_page_config(
         page_title="Pondering",
 )
