@@ -6,7 +6,7 @@ from firebase_admin import auth
 
 
 cred = credentials.Certificate("pymder-f3a04-firebase-adminsdk-pjpfq-049f9c9856.json")
-#firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred)
 def app():
 # Usernm = []
     st.title('Welcome to :orange[Pymder] :moneybag:')

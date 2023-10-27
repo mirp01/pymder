@@ -44,11 +44,11 @@ def app():
     if st.session_state.username=='':
         st.header(' Please login or create an account')
         ph = 'Login to Start collaborating!!'
-        image = Image.open('C:/Users/edosa/Documents/Pymder app/firabaseDB/pymder_logo.png')
+        image = Image.open('pymder_logo.png')
         st.image(image, caption= "Posible collaborations will show here!")
     else:
         ph='Looking good'
-        image = Image.open('C:/Users/edosa/Documents/Pymder app/firabaseDB/Pymder.png')
+        image = Image.open('Pymder.png')
         st.image(image, caption= "Posible collaborations will show here!")
         
     post=st.text_area(label=' :orange[+ New Post]',placeholder=ph,height=None, max_chars=500)
