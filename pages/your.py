@@ -1,12 +1,25 @@
 import streamlit as st
 from firebase_admin import firestore
+from initialize import firebase_app  # Import the Firebase app instance
+from firebase_admin import storage
+import datetime
 
-  
+# Function to display images from Firebase Storage
+def display_images():
+    st.title("Image gallery")
+    st.markdown("Here you can see the images you have uploaded")
+    bucket = storage.bucket(app=firebase_app)  # Specify the pre-initialized Firebase app
+    blobs = bucket.list_blobs(prefix="images/")
+    for blob in blobs:
+        url = blob.generate_signed_url(datetime.timedelta(hours=1))
+        st.image(url, caption=blob.name)
+
 def app():
     db=firestore.client()
 
 
     try:
+        display_images()
         st.title('Posted by: '+st.session_state['username'] )
 
             

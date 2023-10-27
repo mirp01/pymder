@@ -1,8 +1,8 @@
 import streamlit as st
 
 def app():
-    st.subheader('Pondering is a website created for users to')
-    st.subheader('share their valuable thoughts with the world.')
-    st.markdown('Created by: [Ashwani Siwach](https://github.com/Ashwani132003)')
-    st.markdown('Contact via mail: [siwachsahab1@gmail.com]')
+    st.subheader('Pymder was created in order to help the pymes')
+    st.subheader('financialy recover after the covid-19 pandemic.')
+    st.markdown("Created by:")
+    st.markdown('Edwin Iñiguez, Luz Patricia Hernandez, Sara Vargas and Mireya Rodriguéz')
     

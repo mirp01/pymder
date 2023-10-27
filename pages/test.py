@@ -3,10 +3,8 @@ import firebase_admin
 from firebase_admin import firestore
 from firebase_admin import credentials
 from firebase_admin import auth
+from initialize import firebase_app 
 
-
-cred = credentials.Certificate("pymder-f3a04-firebase-adminsdk-pjpfq-049f9c9856.json")
-firebase_admin.initialize_app(cred)
 def app():
 # Usernm = []
     st.title('Welcome to :orange[Pymder] :moneybag:')

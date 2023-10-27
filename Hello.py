@@ -3,12 +3,10 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 
-import pages.home as home, pages.test as test, pages.your as your, pages.about as about
+import pages.home as home, pages.test as test, pages.your as your, pages.about as about, pages.setup as setup
 st.set_page_config(
-        page_title="Pondering",
+        page_title="PYMDER",
 )
-
-
 
 class MultiApp:
 
@@ -26,8 +24,8 @@ class MultiApp:
         # app = st.sidebar(
         with st.sidebar:        
             app = option_menu(
-                menu_title='Pondering ',
-                options=['Home','Account','Trending','Your Posts','about'],
+                menu_title='Pymder app ',
+                options=['Home','Account','Set up','Your Preview','about'],
                 icons=['house-fill','person-circle','trophy-fill','chat-fill','info-circle-fill'],
                 menu_icon='chat-text-fill',
                 default_index=1,
@@ -43,8 +41,10 @@ class MultiApp:
         if app == "Home":
             home.app()
         if app == "Account":
-            test.app()         
-        if app == 'Your Posts':
+            test.app()
+        if app == 'Set up':
+            setup.app()         
+        if app == 'Your Preview':
             your.app()
         if app == 'about':
             about.app()    
