@@ -5,6 +5,7 @@ import datetime
 from firebase_admin import firestore
 
 # Function to upload an image to Firebase Storage
+option = ''
 def upload_image():
     st.header("Upload an Image so that everyone can see how cool you are")
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png"])
@@ -16,6 +17,7 @@ def upload_image():
 
 def cuidadNTags():
     db=firestore.client()
+    global option
     option = st.selectbox(
     'Where is your bussiness located?',
     ('Pueblo paleta', 'Machupichu', 'El reino de muy muy lejano', 'Guadalajara', 'Jocotepec'),placeholder='Select one form the options')
@@ -33,6 +35,8 @@ def cuidadNTags():
 
 # Main function to run the app
 def app():
+    global option
+    db = firestore.client()
     st.title('This is were you set up your business account')
     if st.session_state.username=='':
         st.header('Please log in or create an account')
@@ -40,4 +44,18 @@ def app():
         st.subheader('Start uploading to your profile')
         upload_image()
         cuidadNTags()
+    collection_ref = db.collection('Cuidad')
+
+    query = collection_ref.where('Content', 'array_contains', option)
+
+    matching_documents = query.stream()
+
+    usernames = []
+    for document in matching_documents:
+        username = document.id
+        usernames.append(username)
     
+    st.write(f"Companies in {option} : ")
+
+    for i in usernames:
+        st.write(f"{i}, ")
