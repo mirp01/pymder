@@ -1,31 +1,18 @@
 import streamlit as st
 from firebase_admin import firestore
 from PIL import Image
+import datetime
+from firebase_admin import storage
+from initialize import firebase_app  # Import the Firebase app instance
 
-#Matchmaking system
-class Elo:
-
-	def __init__(self,k,g=1,homefield = 100):
-		self.ratingDict  	= {}	
-		self.k 				= k
-		self.g 				= g
-		self.homefield		= homefield
-
-	def addPlayer(self,name,rating = 1500):
-		self.ratingDict[name] = rating
-		
-	def gameOver(self, winner, loser, winnerHome):
-		if winnerHome:
-			result = self.expectResult(self.ratingDict[winner] + self.homefield, self.ratingDict[loser])
-		else:
-			result = self.expectResult(self.ratingDict[winner], self.ratingDict[loser]+self.homefield)
-
-		self.ratingDict[winner] = self.ratingDict[winner] + (self.k*self.g)*(1 - result)  
-		self.ratingDict[loser] 	= self.ratingDict[loser] + (self.k*self.g)*(0 - (1 -result))
-		
-	def expectResult(self, p1, p2):
-		exp = (p2-p1)/400.0
-		return 1/((10.0**(exp))+1)
+def display_images(username):
+    st.title(f"{st.session_state['username']} Image gallery")
+    st.markdown(f"This are the images {username} has uploaded")
+    bucket = storage.bucket(app=firebase_app)  # Specify the pre-initialized Firebase app
+    blobs = bucket.list_blobs(prefix=f"images/{username}")
+    for blob in blobs:
+        url = blob.generate_signed_url(datetime.timedelta(hours=1))
+        st.image(url, caption=blob.name)
 
 #operaciones del matchmaking
 def colEloCollab():
@@ -44,11 +31,11 @@ def app():
     if st.session_state.username=='':
         st.header(' Please login or create an account')
         ph = 'Login to Start collaborating!!'
-        image = Image.open('pymder_logo.png')
+        image = Image.open('C:/Users/edosa/Documents/Pymder app/firabaseDB/pymder_logo.png')
         st.image(image, caption= "Posible collaborations will show here!")
     else:
         ph='Looking good'
-        image = Image.open('Pymder.png')
+        image = Image.open('C:/Users/edosa/Documents/Pymder app/firabaseDB/Pymder.png')
         st.image(image, caption= "Posible collaborations will show here!")
         
     post=st.text_area(label=' :orange[+ New Post]',placeholder=ph,height=None, max_chars=500)
@@ -74,15 +61,13 @@ def app():
                 
             st.success('Post uploaded!!')
     
-    st.header(' :violet[Latest Posts] ')
-    
-    
-    
-    
-    docs = db.collection('Posts').get()
+            st.header(' :violet[Latest Posts] ')
             
-    for doc in docs:
-        d=doc.to_dict()
-        try:
-            st.text_area(label=':green[Posted by:] '+':orange[{}]'.format(d['Username']),value=d['Content'][-1],height=20)
-        except: pass
+            
+            docs = db.collection('Posts').get()
+                    
+            for doc in docs:
+                d=doc.to_dict()
+                try:
+                    st.text_area(label=':green[Posted by:] '+':orange[{}]'.format(d['Username']),value=d['Content'][-1],height=20)
+                except: pass
